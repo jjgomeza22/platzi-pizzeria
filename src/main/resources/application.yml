@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: platzi-pizzeria
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/pizzeria?createDatabaseIfNotExist=true
+    username: root
+    password: toor
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
