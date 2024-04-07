@@ -10,11 +10,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -22,7 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "pizza")
-public class PizzaEntity {
+public class PizzaEntity extends AuditableEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pizza")
@@ -45,12 +41,4 @@ public class PizzaEntity {
 
     @Column(name = "available", columnDefinition = "TINYINT", nullable = false)
     private Boolean available;
-
-    @Column(name = "created_date")
-    @CreatedDate
-    private LocalDateTime createdDate;
-
-    @Column(name = "modified_date")
-    @LastModifiedDate
-    private LocalDateTime modifiedDate;
 }
