@@ -3,12 +3,16 @@ package com.platzi.pizzeria.service;
 import com.platzi.pizzeria.persistence.entity.PizzaEntity;
 import com.platzi.pizzeria.persistence.repository.PizzaPagSortRepository;
 import com.platzi.pizzeria.persistence.repository.PizzaRepository;
+import com.platzi.pizzeria.service.dto.UpdatePizzaPriceDTO;
+import com.platzi.pizzeria.service.exception.EmailAPIException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -78,5 +82,18 @@ public class PizzaService {
             return pizzaRepository.findTop3ByAvailableTrueAndPriceLessThanEqualOrderByPriceAsc(price);
         }
         return pizzaRepository.findTop3ByAvailableTrueOrderByPriceAsc();
+    }
+
+    @Transactional(
+            noRollbackFor = EmailAPIException.class,
+            propagation = Propagation.REQUIRED
+    )
+    public void updatePrice(UpdatePizzaPriceDTO updatePizzaPrice) {
+        pizzaRepository.updatePrice(updatePizzaPrice);
+        this.senEmail();
+    }
+
+    private void senEmail() {
+        throw new EmailAPIException();
     }
 }
