@@ -3,9 +3,11 @@ package com.platzi.pizzeria.service;
 import com.platzi.pizzeria.persistence.entity.OrderEntity;
 import com.platzi.pizzeria.persistence.projection.OrderSummary;
 import com.platzi.pizzeria.persistence.repository.OrderRepository;
+import com.platzi.pizzeria.service.dto.RandomOrderDTO;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -46,5 +48,13 @@ public class OrderService {
 
     public OrderSummary getSummary(int orderId) {
         return orderRepository.findSummary(orderId);
+    }
+
+    @Transactional
+    public boolean saveRandomOrder(RandomOrderDTO randomOrder) {
+        return orderRepository.saveRandomOrder(
+                randomOrder.getIdCustomer(),
+                randomOrder.getMethod()
+        );
     }
 }
