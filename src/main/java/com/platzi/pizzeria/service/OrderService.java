@@ -1,6 +1,7 @@
 package com.platzi.pizzeria.service;
 
 import com.platzi.pizzeria.persistence.entity.OrderEntity;
+import com.platzi.pizzeria.persistence.projection.OrderSummary;
 import com.platzi.pizzeria.persistence.repository.OrderRepository;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +42,9 @@ public class OrderService {
 
     public List<OrderEntity> getCustomerOrders(String idCustomer) {
         return orderRepository.findCustomerOrders(idCustomer);
+    }
+
+    public OrderSummary getSummary(int orderId) {
+        return orderRepository.findSummary(orderId);
     }
 }
