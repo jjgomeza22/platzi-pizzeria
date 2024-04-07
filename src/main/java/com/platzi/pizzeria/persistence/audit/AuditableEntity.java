@@ -1,4 +1,4 @@
-package com.platzi.pizzeria.persistence.entity;
+package com.platzi.pizzeria.persistence.audit;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass
 public class AuditableEntity {
-    @Column(name = "created_date")
+    @Column(name = "created_date", updatable = false)
     @CreatedDate
     private LocalDateTime createdDate;
 
