@@ -3,7 +3,9 @@ package com.platzi.pizzeria.web.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -21,6 +23,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(customRequest -> customRequest
+                        .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/customers/**").hasAnyRole(ADMIN.getValue(), CUSTOMER.getValue())
                         .requestMatchers(HttpMethod.GET, "/api/pizzas/**").hasAnyRole(ADMIN.getValue(), CUSTOMER.getValue()) //with **, permit all the GET request
                         .requestMatchers(HttpMethod.POST, "/api/pizzas/**").hasRole(ADMIN.getValue())
@@ -33,6 +36,11 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults());
 
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
     }
 
     @Bean
