@@ -22,6 +22,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/pizzas/**").hasAnyRole(ADMIN.getValue(), CUSTOMER.getValue()) //with **, permit all the GET request
                         .requestMatchers(HttpMethod.POST, "/api/pizzas/**").hasRole(ADMIN.getValue())
                         .requestMatchers(HttpMethod.PUT).hasRole(ADMIN.getValue()) //It does not have patter, it applies to all project
+                        .requestMatchers(HttpMethod.POST, "/api/orders/random").hasAuthority("random_order")
                         .requestMatchers("/api/orders/**").hasRole(ADMIN.getValue()) //to use all the methods you need to be an admin
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
