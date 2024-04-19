@@ -4,8 +4,8 @@ import com.platzi.pizzeria.persistence.entity.OrderEntity;
 import com.platzi.pizzeria.persistence.projection.OrderSummary;
 import com.platzi.pizzeria.persistence.repository.OrderRepository;
 import com.platzi.pizzeria.service.dto.RandomOrderDTO;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +42,7 @@ public class OrderService {
         return orderRepository.findAllByMethodIn(methods);
     }
 
+    @Secured("ROLE_ADMIN")
     public List<OrderEntity> getCustomerOrders(String idCustomer) {
         return orderRepository.findCustomerOrders(idCustomer);
     }
