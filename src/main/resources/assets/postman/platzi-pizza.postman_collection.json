@@ -12,6 +12,21 @@
 				{
 					"name": "Get pizzas",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{customerUsername}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{customerUsername}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -262,11 +277,26 @@
 				{
 					"name": "Update pizza",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "6b50820c-2816-409c-916f-0a31a91762c4",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"idPizza\": 15,\r\n    \"name\": \"lina's\",\r\n    \"description\": \"Tomatoes, Mozzarella, Ricotta & Baby Spinach, jalapeños\",\r\n    \"price\": 19.99,\r\n    \"vegetarian\": false,\r\n    \"vegan\": false,\r\n    \"available\": true\r\n}",
+							"raw": "{\r\n    \"idPizza\": 15,\r\n    \"name\": \"lina's\",\r\n    \"description\": \"Tomatoes, Mozzarella, Ricotta & Baby Spinach, jalapeños\",\r\n    \"price\": 19.99,\r\n    \"vegetarian\": true,\r\n    \"vegan\": false,\r\n    \"available\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -356,6 +386,16 @@
 				{
 					"name": "Get orders",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6InBsYXR6aS1waXp6YSIsImlhdCI6MTcxMzY2OTA3MiwiZXhwIjoxNzE0OTY1MDcyfQ.idfwhPgcabgqdNihEZXGyrNzuDkF10uos9-7VjlPEgM",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -418,10 +458,25 @@
 				{
 					"name": "Get customer orders",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/orders/customer/192758012",
+							"raw": "http://localhost:8080/api/customer/customer/192758012",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -429,7 +484,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"orders",
+								"customer",
 								"customer",
 								"192758012"
 							]
@@ -462,6 +517,21 @@
 				{
 					"name": "Random order",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{adminPassword}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{adminUsername}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -523,6 +593,94 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "/login",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "adminUsername",
+			"value": "admin",
+			"type": "string"
+		},
+		{
+			"key": "adminPassword",
+			"value": "admin123",
+			"type": "string"
+		},
+		{
+			"key": "customerUsername",
+			"value": "customer",
+			"type": "string"
+		},
+		{
+			"key": "customerPassword",
+			"value": "customer123",
+			"type": "string"
 		}
 	]
 }
